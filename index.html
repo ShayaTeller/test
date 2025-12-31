@@ -1,84 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./test.css" />
+    <title>web-shop</title>
   </head>
   <body>
-
-    <header class="header">
-      <h1>🌤️ Weather Learning Hub</h1>
-      <p>Explore different weather phenomena and learn how they work</p>
-    </header>
-    <h1>hello from teller</h1>
-
-
-<!-- Snow Card -->
-
-<main class="main-box">
-
-    <section class="weather-card" data-weather="snow">
-        <aside id="snowContainer">❄️</aside>
-        <aside id="snowContainer1">❄️</aside>
-        <aside id="snowContainer2">❄️</aside>
-        <aside id="snowContainer3">❄️</aside>
-        <aside id="snowContainer4">❄️</aside>
-        <aside id="snowContainer5">❄️</aside>
-        <aside id="snowContainer6">❄️</aside>
-        <h2>
-          <span class="weather-icon">❄️</span>
-          Snow Formation
-        </h2>
-        <p class="weather-description">
-          Snow forms when water vapor in clouds freezes into ice crystals. Each
-          snowflake is unique and falls gently to earth, creating winter's magical
-          blanket.
-        </p>
-        <button class="learn-more-btn">Learn More</button>
-    </section>
-
-<!-- Rain Card -->
-            <section class="weather-card" data-weather="rain">
-                <aside class="rain-container" id="rainContainer"></aside>
-                <h2>
-                    <span class="weather-icon">🌧️</span>
-                    Rain Cycle
-                </h2>
-                <p class="weather-description">
-                    Rain begins when water droplets in clouds become too heavy to stay suspended. They fall as precipitation, nourishing plants and refilling our water sources.
-                </p>
-                <button class="learn-more-btn">Learn More</button>
-            </section>
-
-<!-- Sunny Card -->
-            <section class="weather-card" data-weather="sunny">
-                <aside class="sun-rays"></aside>
-                <h2>
-                    <span class="weather-icon">☀️</span>
-                    Sunshine & Heat
-                </h2>
-                <p class="weather-description">
-                    The sun provides energy that drives Earth's weather systems. Solar radiation heats our planet, creating wind patterns and the water cycle.
-                </p>
-                <button class="learn-more-btn">Learn More</button>
-            </section>
-
-<!-- Cloudy Card -->
-            <section class="weather-card" data-weather="cloudy">
-                <!-- <div class="cloud cloud1"></div> -->
-                <!-- <div class="cloud cloud2"></div> -->
-                <h2>
-                    <span class="weather-icon">☁️</span>
-                    Cloud Formation
-                </h2>
-                <p class="weather-description">
-                    Clouds form when warm, moist air rises and cools. Water vapor condenses around tiny particles, creating the fluffy formations we see in the sky.
-                </p>
-                <button class="learn-more-btn">Learn More</button>
-            </section>
-</main>
-
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
