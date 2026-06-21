@@ -39,6 +39,13 @@
 .price{font-weight:600}
 .add{margin-top:auto;background:var(--accent);color:#fff;border:none;padding:.6rem;border-radius:6px;cursor:pointer}
 
+/* Google search section */
+.search-section{padding:2rem 1rem;max-width:1100px;margin:0 auto;width:100%}
+.search-section h2{margin:0 0 1rem;text-align:right}
+.google-search{display:flex;gap:8px;flex-wrap:wrap}
+.google-search input{flex:1;min-width:200px;padding:.6rem .8rem;border:1px solid #e6e6e6;border-radius:8px;font-size:1rem}
+.google-search button{background:var(--accent);color:#fff;border:none;padding:.6rem 1.2rem;border-radius:8px;cursor:pointer;font-size:1rem}
+
 .site-footer{padding:1.5rem;text-align:center;color:var(--muted);border-top:1px solid #eee;margin-top:2rem}
 
 /* Responsive breakpoints */
