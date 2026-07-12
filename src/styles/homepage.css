@@ -178,34 +178,59 @@
   animation: reveal 850ms 320ms ease both;
 }
 
-.search-skeleton {
-  position: absolute;
-  inset: 14px;
-  z-index: 2;
+.image-search-form {
   display: grid;
-  grid-template-columns: 1fr 110px;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.96);
 }
 
-.skeleton-input,
-.skeleton-button {
-  display: block;
-  min-height: 42px;
-  background: linear-gradient(90deg, #ece9e0 20%, #f7f5ef 45%, #ece9e0 70%);
-  background-size: 220% 100%;
-  animation: shimmer 1.4s linear infinite;
+.image-search-input {
+  min-width: 0;
+  height: 50px;
+  padding: 0 17px;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid rgba(36, 49, 44, 0.16);
+  border-radius: 0;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.skeleton-button {
-  background-color: rgba(49, 91, 76, 0.24);
+.image-search-input::placeholder {
+  color: rgba(36, 49, 44, 0.42);
+}
+
+.image-search-input:focus {
+  border-color: var(--pine);
+  box-shadow: inset 0 0 0 1px var(--pine);
+}
+
+.image-search-button {
+  min-height: 50px;
+  padding: 0 24px;
+  color: #fff;
+  background: var(--pine);
+  border: 1px solid var(--pine);
+  border-radius: 0;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.image-search-button:hover {
+  background: var(--pine-deep);
+  transform: translateY(-1px);
+}
+
+.image-search-button:focus-visible {
+  outline: 3px solid rgba(49, 91, 76, 0.28);
+  outline-offset: 3px;
 }
 
 .search-error {
-  padding: 16px;
+  margin: 10px 2px 0;
   color: #783e35;
-  background: #f1dfd6;
-  border-right: 3px solid #9d594c;
+  font-size: 0.82rem;
 }
 
 .search-notes {
@@ -307,74 +332,6 @@
   font-size: 0.76rem;
 }
 
-/* Google Programmable Search overrides */
-.search-shell .gsc-control-cse,
-.search-shell .gsc-control-cse-he {
-  padding: 0 !important;
-  background: transparent !important;
-  border: 0 !important;
-  font-family: "Heebo", sans-serif !important;
-}
-
-.search-shell .gsc-search-box {
-  margin: 0 !important;
-}
-
-.search-shell table.gsc-search-box {
-  margin-bottom: 0 !important;
-}
-
-.search-shell .gsc-input-box {
-  height: 48px !important;
-  background: #fff !important;
-  border: 1px solid rgba(36, 49, 44, 0.16) !important;
-  border-radius: 0 !important;
-}
-
-.search-shell input.gsc-input {
-  padding-right: 14px !important;
-  font-family: "Heebo", sans-serif !important;
-  font-size: 1rem !important;
-}
-
-.search-shell .gsc-search-button-v2 {
-  width: 64px !important;
-  height: 48px !important;
-  margin: 0 8px 0 0 !important;
-  padding: 15px 22px !important;
-  background: var(--pine) !important;
-  border: 1px solid var(--pine) !important;
-  border-radius: 0 !important;
-  transition: background 180ms ease, transform 180ms ease;
-}
-
-.search-shell .gsc-search-button-v2:hover {
-  background: var(--pine-deep) !important;
-  transform: translateY(-1px);
-}
-
-.search-shell .gsc-search-button-v2:focus-visible {
-  outline: 3px solid rgba(49, 91, 76, 0.28);
-  outline-offset: 3px;
-}
-
-.search-shell .gsc-results-wrapper-visible {
-  margin-top: 24px;
-}
-
-.search-shell .gsc-result,
-.search-shell .gsc-webResult.gsc-result {
-  padding: 18px 8px !important;
-  background: transparent !important;
-  border-color: rgba(36, 49, 44, 0.12) !important;
-}
-
-.search-shell .gs-title,
-.search-shell .gs-title * {
-  color: var(--pine-deep) !important;
-  font-family: "Frank Ruhl Libre", serif !important;
-}
-
 @keyframes reveal {
   from {
     opacity: 0;
@@ -383,12 +340,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes shimmer {
-  to {
-    background-position: -220% 0;
   }
 }
 
@@ -424,9 +375,12 @@
     padding: 9px;
   }
 
-  .search-skeleton {
-    inset: 9px;
-    grid-template-columns: 1fr 64px;
+  .image-search-form {
+    grid-template-columns: 1fr;
+  }
+
+  .image-search-button {
+    width: 100%;
   }
 
   .search-notes {
