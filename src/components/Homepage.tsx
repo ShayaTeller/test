@@ -1,81 +1,122 @@
+import { useEffect, useState } from "react";
 import "../styles/homepage.css";
 
-type Product = {
-  id: number;
-  name: string;
-  price: string;
-  image?: string;
-};
-
-const sampleProducts: Product[] = [
-  { id: 1, name: "חולצה מודפסת", price: "₪79", image: "/assets/product-1.jpg" },
-  { id: 2, name: "ג'קט קלאסי", price: "₪249", image: "/assets/product-2.jpg" },
-  { id: 3, name: "נעלי ספורט", price: "₪199", image: "/assets/product-3.jpg" },
-  { id: 4, name: "כיסא עיצוב", price: "₪399", image: "/assets/product-4.jpg" },
-];
+const SEARCH_ENGINE_ID = "d0235fadd8a3c4fc6";
 
 export default function Homepage() {
+  const [isSearchLoading, setIsSearchLoading] = useState(true);
+  const [hasSearchError, setHasSearchError] = useState(false);
+
+  useEffect(() => {
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      `script[data-google-cse="${SEARCH_ENGINE_ID}"]`,
+    );
+
+    if (existingScript) {
+      queueMicrotask(() => setIsSearchLoading(false));
+      return;
+    }
+
+    const script = document.createElement("script");
+    const handleLoad = () => setIsSearchLoading(false);
+    const handleError = () => {
+      setIsSearchLoading(false);
+      setHasSearchError(true);
+    };
+
+    script.src = `https://cse.google.com/cse.js?cx=${SEARCH_ENGINE_ID}`;
+    script.async = true;
+    script.dataset.googleCse = SEARCH_ENGINE_ID;
+    script.addEventListener("load", handleLoad);
+    script.addEventListener("error", handleError);
+    document.head.appendChild(script);
+
+    return () => {
+      script.removeEventListener("load", handleLoad);
+      script.removeEventListener("error", handleError);
+    };
+  }, []);
+
   return (
-    <div className="homepage">
-      <header className="hero">
-        <div className="hero-inner">
-          <h1>ברוכים הבאים לחנות שלנו</h1>
-          <p>
-            מגוון מוצרים איכותיים במחירים הטובים ביותר. משלוח חינם בקנייה מעל
-            ₪199.
-          </p>
-          <a className="cta" href="#products">
-            קנה עכשיו
-          </a>
-        </div>
+    <main className="image-search-page" dir="rtl">
+      <div className="ambient ambient-one" aria-hidden="true" />
+      <div className="ambient ambient-two" aria-hidden="true" />
+
+      <header className="topbar">
+        <a className="brand" href="#top" aria-label="תמונע - חיפוש תמונות">
+          <span className="brand-mark" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+          <span>תמונע</span>
+        </a>
+        <span className="powered-by">מופעל באמצעות Google</span>
       </header>
 
-      <section id="products" className="products">
-        <h2>מוצרים מובחרים</h2>
-        <div className="grid">
-          {sampleProducts.map((p) => (
-            <article key={p.id} className="card">
-              <div
-                className="thumb"
-                style={{ backgroundImage: `url(${p.image})` }}
-              />
-              <div className="card-body">
-                <h3>{p.name}</h3>
-                <div className="price">{p.price}</div>
-                <button className="add">הוסף לעגלה</button>
-              </div>
-            </article>
-          ))}
+      <section id="top" className="search-hero" aria-labelledby="page-title">
+        <div className="eyebrow">
+          <span className="eyebrow-line" />
+          למצוא. לראות. לשמור.
+        </div>
+        <h1 id="page-title">
+          העולם כולו,
+          <span>בתמונה אחת.</span>
+        </h1>
+        <p>
+          חיפוש תמונות מהיר ונקי ברחבי הרשת. הקלידו רעיון, מקום או רגע —
+          ותנו לתמונות לדבר.
+        </p>
+
+        <div className="search-shell">
+          {isSearchLoading && (
+            <div className="search-skeleton" aria-live="polite">
+              <span className="skeleton-input" />
+              <span className="skeleton-button" />
+              <span className="sr-only">טוען את מנוע החיפוש</span>
+            </div>
+          )}
+
+          {hasSearchError ? (
+            <div className="search-error" role="alert">
+              מנוע החיפוש לא נטען. בדקו את החיבור ורעננו את העמוד.
+            </div>
+          ) : (
+            <div className="gcse-search" />
+          )}
+        </div>
+
+        <div className="search-notes" aria-label="מידע על החיפוש">
+          <span>תוצאות תמונה ממנוע Google</span>
+          <span>החיפוש נפתח כאן בעמוד</span>
         </div>
       </section>
 
-      <section id="search" className="search-section">
-        <h2>חיפוש בגוגל</h2>
-        <script
-          async
-          src="https://cse.google.com/cse.js?cx=d0235fadd8a3c4fc6"
-        ></script>
-        <div class="gcse-search"></div>
-        <form
-          className="google-search"
-          action="https://www.google.com/search"
-          method="get"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <input
-            type="text"
-            name="q"
-            placeholder="מה תרצו לחפש?"
-            aria-label="חיפוש בגוגל"
-          />
-          <button type="submit">חפש בגוגל</button>
-        </form>
+      <section className="visual-strip" aria-label="השראה לחיפוש">
+        <article className="visual-card card-landscape">
+          <div className="card-copy">
+            <span>טבע</span>
+            <strong>מקומות שעוצרים בהם</strong>
+          </div>
+        </article>
+        <article className="visual-card card-architecture">
+          <div className="card-copy">
+            <span>אדריכלות</span>
+            <strong>קווים, אור וחומר</strong>
+          </div>
+        </article>
+        <article className="visual-card card-texture">
+          <div className="card-copy">
+            <span>מרקמים</span>
+            <strong>פרטים קטנים מקרוב</strong>
+          </div>
+        </article>
       </section>
 
       <footer className="site-footer">
-        <div>© {new Date().getFullYear()} חנות הדגמה — כל הזכויות שמורות</div>
+        <span>חיפוש תמונות פשוט, ללא הסחות דעת.</span>
+        <span>© {new Date().getFullYear()} תמונע</span>
       </footer>
-    </div>
+    </main>
   );
 }

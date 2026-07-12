@@ -1,11 +1,5 @@
-import Homepage from './components/Homepage'
-import './styles/homepage.css'
+import Homepage from "./components/Homepage";
 
 export default function App() {
-  return (
-    <div>
-      hello welcome
-      <Homepage />
-    </div>
-  )
+  return <Homepage />;
 }
