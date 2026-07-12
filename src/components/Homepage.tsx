@@ -1,41 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState, type FormEvent } from "react";
 import "../styles/homepage.css";
 
-const SEARCH_ENGINE_ID = "d0235fadd8a3c4fc6";
-
 export default function Homepage() {
-  const [isSearchLoading, setIsSearchLoading] = useState(true);
-  const [hasSearchError, setHasSearchError] = useState(false);
+  const [query, setQuery] = useState("");
+  const [searchError, setSearchError] = useState("");
 
-  useEffect(() => {
-    const existingScript = document.querySelector<HTMLScriptElement>(
-      `script[data-google-cse="${SEARCH_ENGINE_ID}"]`,
-    );
-
-    if (existingScript) {
-      queueMicrotask(() => setIsSearchLoading(false));
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    if (!query.trim()) {
+      event.preventDefault();
+      setSearchError("כתבו מה תרצו לחפש.");
       return;
     }
 
-    const script = document.createElement("script");
-    const handleLoad = () => setIsSearchLoading(false);
-    const handleError = () => {
-      setIsSearchLoading(false);
-      setHasSearchError(true);
-    };
-
-    script.src = `https://cse.google.com/cse.js?cx=${SEARCH_ENGINE_ID}`;
-    script.async = true;
-    script.dataset.googleCse = SEARCH_ENGINE_ID;
-    script.addEventListener("load", handleLoad);
-    script.addEventListener("error", handleError);
-    document.head.appendChild(script);
-
-    return () => {
-      script.removeEventListener("load", handleLoad);
-      script.removeEventListener("error", handleError);
-    };
-  }, []);
+    setSearchError("");
+  };
 
   return (
     <main className="image-search-page" dir="rtl">
@@ -43,13 +21,13 @@ export default function Homepage() {
       <div className="ambient ambient-two" aria-hidden="true" />
 
       <header className="topbar">
-        <a className="brand" href="#top" aria-label="תמונע - חיפוש תמונות">
+        <a className="brand" href="#top" aria-label="מצא - חיפוש Google">
           <span className="brand-mark" aria-hidden="true">
             <span />
             <span />
             <span />
           </span>
-          <span>תמונע</span>
+          <span>מצא</span>
         </a>
         <span className="powered-by">מופעל באמצעות Google</span>
       </header>
@@ -60,35 +38,55 @@ export default function Homepage() {
           למצוא. לראות. לשמור.
         </div>
         <h1 id="page-title">
-          העולם כולו,
-          <span>בתמונה אחת.</span>
+          כל מה שחיפשת,
+          <span>במקום אחד.</span>
         </h1>
         <p>
-          חיפוש תמונות מהיר ונקי ברחבי הרשת. הקלידו רעיון, מקום או רגע —
-          ותנו לתמונות לדבר.
+          חיפוש Google מהיר ונקי ברחבי הרשת. הקלידו שאלה, נושא או אתר —
+          וקבלו את התוצאות הרלוונטיות.
         </p>
 
         <div className="search-shell">
-          {isSearchLoading && (
-            <div className="search-skeleton" aria-live="polite">
-              <span className="skeleton-input" />
-              <span className="skeleton-button" />
-              <span className="sr-only">טוען את מנוע החיפוש</span>
-            </div>
-          )}
-
-          {hasSearchError ? (
-            <div className="search-error" role="alert">
-              מנוע החיפוש לא נטען. בדקו את החיבור ורעננו את העמוד.
-            </div>
-          ) : (
-            <div className="gcse-search" />
+          <form
+            className="image-search-form"
+            action="https://www.google.com/search"
+            method="get"
+            target="_blank"
+            onSubmit={handleSearch}
+          >
+            <input type="hidden" name="hl" value="he" />
+            <label className="sr-only" htmlFor="image-search-query">
+              מה תרצו לחפש?
+            </label>
+            <input
+              id="image-search-query"
+              className="image-search-input"
+              type="search"
+              name="q"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                if (searchError) setSearchError("");
+              }}
+              placeholder="למשל: שקיעה במדבר"
+              autoComplete="off"
+              aria-describedby={searchError ? "search-error" : undefined}
+              aria-invalid={Boolean(searchError)}
+            />
+            <button className="image-search-button" type="submit">
+              חיפוש ב-Google
+            </button>
+          </form>
+          {searchError && (
+            <p id="search-error" className="search-error" role="alert">
+              {searchError}
+            </p>
           )}
         </div>
 
         <div className="search-notes" aria-label="מידע על החיפוש">
-          <span>תוצאות תמונה ממנוע Google</span>
-          <span>החיפוש נפתח כאן בעמוד</span>
+          <span>תוצאות חיפוש ממנוע Google</span>
+          <span>התוצאות נפתחות בכרטיסייה חדשה</span>
         </div>
       </section>
 
@@ -114,8 +112,8 @@ export default function Homepage() {
       </section>
 
       <footer className="site-footer">
-        <span>חיפוש תמונות פשוט, ללא הסחות דעת.</span>
-        <span>© {new Date().getFullYear()} תמונע</span>
+        <span>חיפוש פשוט, ללא הסחות דעת.</span>
+        <span>© {new Date().getFullYear()} מצא</span>
       </footer>
     </main>
   );
