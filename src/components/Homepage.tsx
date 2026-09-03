@@ -62,7 +62,7 @@ export default function Homepage() {
               <div className="orbit-ring orbit-ring-one" />
               <div className="orbit-ring orbit-ring-two" />
               <div className="orbit-core">
-                <img src="public\myLogo.png" alt="" />
+                <img src="/myLogo.png" alt="possible logo" />
               </div>
               <div className="orbit-node node-one">💡</div>
               <div className="orbit-node node-two">📐</div>
